@@ -30,6 +30,16 @@ Play Online
 
 Play Mini Map Adventure here -  https://yvvvvvv.itch.io/mini-map-adventure
 
+ 
+Question 2(a) – Screen Rotation Explanation
+
+When rotating the phone from landscape to portrait orientation, the screen’s aspect ratio  changes.
+
+In an orthographic camera, the orthographicSize property determines half the height of the visible area in the game world.
+
+When this value remains constant and the screen changes to portrait orientation, the camera displays a narrower area horizontally. As a result, objects appear larger relative to the screen’s width.
+
+To solve this problem, we can adjust the camera’s orthographicSize based on the screen’s aspect ratio, ensuring that objects maintain a consistent relative size in both orientations.
 Developer
 
 Yuval Frankel 
