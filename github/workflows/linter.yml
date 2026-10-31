@@ -1,0 +1,39 @@
+
+name: Unity C# Linter
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check C# formatting
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import sys
+
+          files = list(Path("Assets").rglob("*.cs"))
+          errors = []
+
+          for file in files:
+              text = file.read_text(encoding="utf-8-sig")
+              if not text.endswith("\n"):
+                  errors.append(f"{file}: missing final newline")
+              for number, line in enumerate(text.splitlines(), 1):
+                  if line.rstrip() != line:
+                      errors.append(f"{file}:{number}: trailing whitespace")
+
+          if errors:
+              print("\n".join(errors))
+              sys.exit(1)
+
+          print(f"Checked {len(files)} C# files successfully.")
+          PY
